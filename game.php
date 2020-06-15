@@ -129,7 +129,11 @@
         // Передает ход другому игроку
         public function toggleActivePlayer()
         {
-            $this->activePlayerClr = 1 - $this->activePlayerClr;
+            if ($this->activePlayerClr == COLOR_WHITE) {
+                $this->activePlayerClr = COLOR_BLACK;
+            } else {
+                $this->activePlayerClr = COLOR_WHITE;
+            }
         }
 
         // Возвращает список фигур на доске
