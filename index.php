@@ -1,6 +1,9 @@
 <?php
 
-require('game.php');
+spl_autoload_extensions('.php');
+spl_autoload_register();
+
+require('Game.php');
 require_once ('pg.php');
 
 //$state = new State;
