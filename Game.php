@@ -21,7 +21,7 @@ class Game {
     }
 
     private static function generateId() {
-        return uniqid('', true);
+        return str_replace('.', '-', uniqid('', true));
     }
 
     private function createGame($player1, $player2) {
