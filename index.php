@@ -3,14 +3,15 @@
 spl_autoload_extensions('.php');
 spl_autoload_register();
 
-require('Game.php');
-require_once ('pg.php');
+require_once('pg/conn.php');
 
-//$state = new State;
-//$state->movePiece(0, 0, 4, 4);
-//\PGDB\insertState('game-id-4', $state);
+$pg = new PGConnection;
 
-$state = PGDB\getState('game-id-4');
+$state = new State;
+$state->movePiece(0, 0, 4, 4);
+$pg->insertState('game-id-5', $state);
+
+$state = $pg->getState('game-id-5');
 print_r($state);
 
 ?>

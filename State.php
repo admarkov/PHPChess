@@ -1,7 +1,6 @@
 <?php
 
 require_once 'Piece.php';
-require_once 'pg.php';
 
 class State {
     private $activePlayerClr = COLOR_WHITE;
