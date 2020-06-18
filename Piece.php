@@ -24,4 +24,14 @@ class Piece {
         $this->y = $y;
         $this->x = $x;
     }
+
+    public function toArray()
+    {
+        return [
+            'color' => $this->color,
+            'type' => $this->type,
+            'x' => $this->x,
+            'y' => $this->y
+        ];
+    }
 }

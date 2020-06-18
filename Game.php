@@ -5,7 +5,7 @@ require_once 'pg/conn.php';
 
 class Game {
     private $id;
-    private $state;
+    public $state;
 
     public function __construct()
     {
@@ -29,12 +29,16 @@ class Game {
     }
 
     private function loadGame($id) {
+        $this->id = $id;
         $pg = new PGConnection;
         $this->state = $pg->getState($id);
-        $this->id = $id;
     }
 
     public function getId() {
         return $this->id;
+    }
+
+    public function existing() {
+        return $this->state != null;
     }
 }

@@ -10,6 +10,7 @@ const STATUS_LOGIC_ERROR        = 'logic_error';
 const ERRCODE_WRONG_METHOD      = 'wrong_method';
 const ERRCODE_MISSING_FIELD     = 'missing_field';
 const ERRCODE_PG_ERROR          = 'pg_request_failed';
+const ERRCODE_GAME_NOT_FOUND    = 'game_not_found';
 
 // --- HTTP Method Enumeration ---
 const METHOD_GET                = 'GET';
