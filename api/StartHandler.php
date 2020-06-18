@@ -9,26 +9,17 @@ class StartHandler extends APIHandler {
         parent::__construct();
 
         parent::setMethod(METHOD_POST);
-
-        parent::setRequestData($_POST);
-
-        parent::addRequiredField('player1');
-        parent::addRequiredField('player2');
     }
 
     protected function handlePreparedRequest()
     {
-        $player1 = parent::requestParam('player1');
-        $player2 = parent::requestParam('player2');
         try {
-            $game = new Game($player1, $player2);
+            $game = new Game;
         } catch (Exception $e) {
             return parent::fail(500, ERRCODE_PG_ERROR, $e->getMessage());
         }
         $response = [
-            'gameId' => $game->getId(),
-            'white' => $game->getWhitePlayerId(),
-            'black' => $game->getBlackPlayerId()
+            'gameId' => $game->getId()
         ];
         return parent::sendResponse($response);
     }

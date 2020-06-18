@@ -52,23 +52,4 @@ class PGConnection {
         $request->bindValue(2, pg_escape_bytea(serialize($state)));
         $request->execute();
     }
-
-    public function getGame($gameId) {
-        $request = self::$conn->prepare('SELECT * FROM games WHERE "id" = ?;');
-        $request->bindValue(1, $gameId);
-        $request->execute();
-        $result = $request->fetchAll(\PDO::FETCH_ASSOC);
-        foreach ($result as $row) {
-            return $row;
-        }
-        return null;
-    }
-
-    public function insertGame($id, $player1, $player2) {
-        $request = self::$conn->prepare('INSERT INTO games("id", "white", "black") VALUES (?, ?, ?);');
-        $request->bindValue(1, $id);
-        $request->bindValue(2, $player1);
-        $request->bindValue(3, $player2);
-        $request->execute();
-    }
 }
