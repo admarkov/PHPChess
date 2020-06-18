@@ -11,6 +11,7 @@ const ERRCODE_WRONG_METHOD      = 'wrong_method';
 const ERRCODE_MISSING_FIELD     = 'missing_field';
 const ERRCODE_PG_ERROR          = 'pg_request_failed';
 const ERRCODE_GAME_NOT_FOUND    = 'game_not_found';
+const ERRCODE_BAD_PARAMS        = 'bad_params';
 
 // --- HTTP Method Enumeration ---
 const METHOD_GET                = 'GET';

@@ -25,13 +25,19 @@ class Piece {
         $this->x = $x;
     }
 
+    public function chessNotationCoordinate()
+    {
+        return chr(ord('A') + $this->x) . chr(ord('1') + $this->y);
+    }
+
     public function toArray()
     {
         return [
             'color' => $this->color,
             'type' => $this->type,
             'x' => $this->x,
-            'y' => $this->y
+            'y' => $this->y,
+            'coordinate' => $this->chessNotationCoordinate()
         ];
     }
 }
