@@ -53,10 +53,18 @@ abstract class APIHandler
         return true;
     }
 
+    private function checkField($field)
+    {
+        if (!array_key_exists($field, $this->requestData)) {
+            return false;
+        }
+        return true;
+    }
+
     private function checkRequiredFields()
     {
         foreach ($this->requiredFields as $field) {
-            if (!array_key_exists($field, $this->requestData)) {
+            if (!$this->checkField($field)) {
                 return false;
             }
         }
