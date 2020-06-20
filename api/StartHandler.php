@@ -8,7 +8,7 @@ class StartHandler extends APIHandler {
     {
         parent::__construct();
 
-        parent::setMethod(METHOD_POST);
+        $this->setMethod(METHOD_POST);
     }
 
     protected function handlePreparedRequest()
@@ -16,11 +16,11 @@ class StartHandler extends APIHandler {
         try {
             $game = new Game;
         } catch (Exception $e) {
-            return parent::fail(500, ERRCODE_PG_ERROR, $e->getMessage());
+            return $this->fail(500, ERRCODE_PG_ERROR, $e->getMessage());
         }
         $response = [
             'gameId' => $game->getId()
         ];
-        return parent::sendResponse($response);
+        return $this->sendResponse($response);
     }
 }

@@ -8,23 +8,23 @@ class StatusHandler extends APIHandler {
     {
         parent::__construct();
 
-        parent::setMethod(METHOD_GET);
+        $this->setMethod(METHOD_GET);
 
-        parent::addRequiredField('gameId');
+        $this->addRequiredField('gameId');
 
-        parent::setRequestData($_GET);
+        $this->setRequestData($_GET);
     }
 
     protected function handlePreparedRequest()
     {
-        $gameId = parent::requestParam('gameId');
+        $gameId = $this->requestParam('gameId');
         try {
             $game = new Game($gameId);
         } catch (Exception $e) {
-            return parent::fail(500, ERRCODE_PG_ERROR, $e->getMessage());
+            return $this->fail(500, ERRCODE_PG_ERROR, $e->getMessage());
         }
         if (!$game->existing()) {
-            return parent::fail(404, 'game_not_found', "no such game: {$gameId}");
+            return $this->fail(404, 'game_not_found', "no such game: {$gameId}");
         }
         $response = array();
         $response['activePlayer'] = $game->state->getActivePlayerClr();

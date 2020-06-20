@@ -8,13 +8,13 @@ class MoveHandler extends APIHandler {
     {
         parent::__construct();
 
-        parent::setMethod(METHOD_POST);
+        $this->setMethod(METHOD_POST);
 
-        parent::addRequiredField('gameId');
-        parent::addRequiredField('from');
-        parent::addRequiredField('to');
+        $this->addRequiredField('gameId');
+        $this->addRequiredField('from');
+        $this->addRequiredField('to');
 
-        parent::setRequestData($_POST);
+        $this->setRequestData($_POST);
     }
 
     private function decodeCoordinate($coordinate)
@@ -29,18 +29,18 @@ class MoveHandler extends APIHandler {
 
     protected function handlePreparedRequest()
     {
-        $gameId = parent::requestParam('gameId');
-        list($y1, $x1) = $this->decodeCoordinate(parent::requestParam('from'));
-        list($y2, $x2) = $this->decodeCoordinate(parent::requestParam('to'));
+        $gameId = $this->requestParam('gameId');
+        list($y1, $x1) = $this->decodeCoordinate($this->requestParam('from'));
+        list($y2, $x2) = $this->decodeCoordinate($this->requestParam('to'));
         if (!isset($y1) or !isset($y2) or !isset($x1) or !isset($x2)) {
-            return parent::fail(400, ERRCODE_BAD_PARAMS, 'cant decode coordinates');
+            return $this->fail(400, ERRCODE_BAD_PARAMS, 'cant decode coordinates');
         }
         $game = new Game($gameId);
         $moveResult = $game->make_move($y1, $x1, $y2, $x2);
         if (!isset($moveResult)) {
-            return parent::sendResponse(array());
+            return $this->sendResponse(array());
         } else {
-            return parent::fail(400, $moveResult, '');
+            return $this->fail(400, $moveResult, '');
         }
     }
 }
