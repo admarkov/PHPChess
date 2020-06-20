@@ -6,6 +6,11 @@ class State {
     private $activePlayerClr = COLOR_WHITE;
     private $board = array();
 
+    private $lastMovePiece1;
+    private $lastMoveY1, $lastMoveX1;
+    private $lastMovePiece2;
+    private $lastMoveY2, $lastMoveX2;
+
     // Проверяет координату на принадлежность доске
     static public function checkCoordinate($z)
     {
@@ -77,6 +82,23 @@ class State {
         return null;
     }
 
+    public function storeLastMove($y1, $x1, $y2, $x2)
+    {
+        $this->lastMoveY1 = $y1;
+        $this->lastMoveY2 = $y2;
+        $this->lastMoveX1 = $x1;
+        $this->lastMoveX2 = $x2;
+
+        $piece1 = $this->board[$y1][$x1];
+        $piece2 = $this->board[$y2][$x2];
+        $this->lastMovePiece1 = new Piece($piece1->color, $piece1->type, $piece1->y, $piece1->x);
+        if (isset($this->board[$y2][$x2])) {
+            $this->lastMovePiece2 = new Piece($piece2->color, $piece2->type, $piece2->y, $piece2->x);;
+        } else {
+            $this->lastMovePiece2 = null;
+        }
+    }
+
     // Перемещает фигуру из клетки (y1, x1) в клетку (y2, x2)
     public function movePiece($y1, $x1, $y2, $x2)
     {
@@ -86,6 +108,7 @@ class State {
         if (!isset($this->board[$y1][$x1])) {
             return false;
         }
+        $this->storeLastMove($y1, $x1, $y2, $x2);
         $this->board[$y2][$x2] = $this->board[$y1][$x1];
         $this->board[$y1][$x1] = null;
         $this->board[$y2][$x2]->y = $y2;
@@ -124,6 +147,17 @@ class State {
             }
         }
         return $res;
+    }
+
+    public function cancelLastMove()
+    {
+        $x1 = $this->lastMoveX1;
+        $x2 = $this->lastMoveX2;
+        $y1 = $this->lastMoveY1;
+        $y2 = $this->lastMoveY2;
+
+        $this->board[$y1][$x1] = $this->lastMovePiece1;
+        $this->board[$y2][$x2] = $this->lastMovePiece2;
     }
 
     // INTENDED FOR USAGE IN TESTS ONLY

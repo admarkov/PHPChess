@@ -2,7 +2,6 @@
 use PHPUnit\Framework\TestCase;
 
 require_once __DIR__ . '/../Game.php';
-require_once __DIR__ . '/../PG/conn.php';
 
 final class GameTest extends TestCase {
 
@@ -298,6 +297,142 @@ final class GameTest extends TestCase {
                 [0, 1, 1, 1, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+    }
+
+    public function testCheckCheck()
+    {
+        $game = $this->createGame(COLOR_WHITE,
+        [
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'BK', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'WQ', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+        ]);
+        $this->assertTrue($game->isCheck(COLOR_BLACK));
+        $this->assertFalse($game->isCheck(COLOR_WHITE));
+
+        $game = $this->createGame(COLOR_WHITE,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'BK', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'WQ', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ]);
+        $this->assertFalse($game->isCheck(COLOR_WHITE));
+        $this->assertFalse($game->isCheck(COLOR_BLACK));
+
+        $game = $this->createGame(COLOR_WHITE,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'BK', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'BP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'WQ', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ]);
+        $this->assertFalse($game->isCheck(COLOR_WHITE));
+        $this->assertFalse($game->isCheck(COLOR_BLACK));
+    }
+
+    public function testCheckMoves()
+    {
+        $this->check(COLOR_BLACK, 3, 3,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'BK', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'WQ', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+
+        $this->check(COLOR_BLACK, 3, 3,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'BK', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'WQ', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 0, 0, 0],
+                [0, 0, 1, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+
+        $this->check(COLOR_BLACK, 2, 2,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'WR', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'BK', 'WP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'BP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'WQ', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 1, 0, 1, 0, 0, 0, 0],
+                [0, 1, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+
+        $this->check(COLOR_WHITE, 3, 3,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'WR', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'WK', 'WP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'WP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'BQ', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 1, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0]

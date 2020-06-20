@@ -8,6 +8,7 @@ const LOGERR_EMPTY_CELL = 'empty_cell';
 const LOGERR_WRONG_COLOR = 'wrong_color';
 const LOGERR_CELL_NOT_EMPTY = 'cell_not_empty';
 const LOGERR_FORBIDDEN_MOVE = 'forbidden_move';
+const LOGERR_CHECK = 'check';
 
 class Game {
     private $id;
@@ -214,6 +215,38 @@ class Game {
         return null;
     }
 
+    private function findKing($clr)
+    {
+        for ($i = 0; $i < 8; $i++) {
+            for ($j = 0; $j < 8; $j++) {
+                $piece = $this->state->getPiece($i, $j);
+                if (isset($piece) and $piece->type == PIECE_KING and $piece->color == $clr) {
+                    return $piece;
+                }
+            }
+        }
+        return null;
+    }
+
+    public function isCheck($clr)
+    {
+        $king = $this->findKing($clr);
+        if (!isset($king)) {
+            return false;
+        }
+        for ($i = 0; $i < 8; $i++) {
+            for ($j = 0; $j < 8; $j++) {
+                $piece = $this->state->getPiece($i, $j);
+                if (isset($piece) and $piece->color != $clr) {
+                    if (is_null($this->moveAccepted($piece, $king->y, $king->x))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public function make_move($y1, $x1, $y2, $x2) {
         if (!State::checkCoordinates($y1, $x1) or !State::checkCoordinates($y2, $x2)) {
             return ERRCODE_BAD_PARAMS;
@@ -232,6 +265,10 @@ class Game {
         }
 
         $this->state->movePiece($y1, $x1, $y2, $x2);
+        if ($this->isCheck($this->state->getActivePlayerClr())) {
+            $this->state->cancelLastMove();
+            return LOGERR_CHECK;
+        }
         $this->state->toggleActivePlayer();
 
         if ($this->synchronize) {
