@@ -13,25 +13,42 @@ class Game {
     private $id;
     public $state;
 
+    private $synchronize = true;
+
     public function __construct()
     {
         if (func_num_args() == 0) {
             $this->createGame();
+            return;
         } else if(func_num_args() == 1) {
-            $this->loadGame(func_get_arg(0));
-        } else {
-            throw new Exception("no such constructor for Game");
+            $arg = func_get_arg(0);
+            if (is_string($arg)) {
+                $this->loadGame($arg);
+                return;
+            } else if ($arg instanceof State) {
+                // test usage only
+                $this->synchronize = false;
+                $this->createGame($arg);
+                return;
+            }
         }
+        throw new Exception('no such constructor for game');
     }
 
     private static function generateId() {
         return str_replace('.', '-', uniqid('', true));
     }
 
-    private function createGame() {
+    private function createGame($state = null) {
         $this->id = self::generateId();
-        $pg = new PGConnection;
-        $pg->insertState($this->id, new State);
+        if (!isset($state)) {
+            $state = new State;
+        }
+        $this->state = $state;
+        if ($this->synchronize) {
+            $pg = new PGConnection;
+            $pg->insertState($this->id, $this->state);
+        }
     }
 
     private function loadGame($id) {
@@ -211,8 +228,10 @@ class Game {
         $this->state->movePiece($y1, $x1, $y2, $x2);
         $this->state->toggleActivePlayer();
 
-        $pg = new PGConnection;
-        $pg->updateState($this->id, $this->state);
+        if ($this->synchronize) {
+            $pg = new PGConnection;
+            $pg->updateState($this->id, $this->state);
+        }
 
         return null;
     }

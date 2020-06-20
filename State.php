@@ -18,35 +18,39 @@ class State {
         return self::checkCoordinate($x) && self::checkCoordinate($y);
     }
 
-    public function __construct()
+    public function __construct($initialActivePlayer = COLOR_WHITE, $initialBoard = null)
     {
-        for ($i = 0; $i < 8; $i++) {
-            $this->board[] = [null, null, null, null, null, null, null, null];
+        if (isset($initialBoard)) {
+            $this->board = $initialBoard;
+        } else {
+            for ($i = 0; $i < 8; $i++) {
+                $this->board[] = [null, null, null, null, null, null, null, null];
+            }
+            $this->board[0][0] = new Piece(COLOR_WHITE, PIECE_ROOK, 0, 0);
+            $this->board[0][1] = new Piece(COLOR_WHITE, PIECE_KNIGHT, 0, 1);
+            $this->board[0][2] = new Piece(COLOR_WHITE, PIECE_BISHOP, 0, 2);
+            $this->board[0][3] = new Piece(COLOR_WHITE, PIECE_QUEEN, 0, 3);
+            $this->board[0][4] = new Piece(COLOR_WHITE, PIECE_KING, 0, 4);
+            $this->board[0][5] = new Piece(COLOR_WHITE, PIECE_BISHOP, 0, 5);
+            $this->board[0][6] = new Piece(COLOR_WHITE, PIECE_KNIGHT, 0, 6);
+            $this->board[0][7] = new Piece(COLOR_WHITE, PIECE_ROOK, 0, 7);
+
+            $this->board[7][0] = new Piece(COLOR_BLACK, PIECE_ROOK, 7, 0);
+            $this->board[7][1] = new Piece(COLOR_BLACK, PIECE_KNIGHT, 7, 1);
+            $this->board[7][2] = new Piece(COLOR_BLACK, PIECE_BISHOP, 7, 2);
+            $this->board[7][3] = new Piece(COLOR_BLACK, PIECE_QUEEN, 7, 3);
+            $this->board[7][4] = new Piece(COLOR_BLACK, PIECE_KING, 7, 4);
+            $this->board[7][5] = new Piece(COLOR_BLACK, PIECE_BISHOP, 7, 5);
+            $this->board[7][6] = new Piece(COLOR_BLACK, PIECE_KNIGHT, 7, 6);
+            $this->board[7][7] = new Piece(COLOR_BLACK, PIECE_ROOK, 7, 7);
+
+            for ($i = 0; $i < 8; $i++) {
+                $this->board[1][$i] = new Piece(COLOR_WHITE, PIECE_PAWN, 1, $i);
+                $this->board[6][$i] = new Piece(COLOR_BLACK, PIECE_PAWN, 6, $i);
+            }
         }
-        $this->board[0][0] = new Piece(COLOR_WHITE, PIECE_ROOK, 0, 0);
-        $this->board[0][1] = new Piece(COLOR_WHITE, PIECE_KNIGHT, 0, 1);
-        $this->board[0][2] = new Piece(COLOR_WHITE, PIECE_BISHOP, 0, 2);
-        $this->board[0][3] = new Piece(COLOR_WHITE, PIECE_QUEEN, 0, 3);
-        $this->board[0][4] = new Piece(COLOR_WHITE, PIECE_KING, 0, 4);
-        $this->board[0][5] = new Piece(COLOR_WHITE, PIECE_BISHOP, 0, 5);
-        $this->board[0][6] = new Piece(COLOR_WHITE, PIECE_KNIGHT, 0, 6);
-        $this->board[0][7] = new Piece(COLOR_WHITE, PIECE_ROOK, 0, 7);
 
-        $this->board[7][0] = new Piece(COLOR_BLACK, PIECE_ROOK, 7, 0);
-        $this->board[7][1] = new Piece(COLOR_BLACK, PIECE_KNIGHT, 7, 1);
-        $this->board[7][2] = new Piece(COLOR_BLACK, PIECE_BISHOP, 7, 2);
-        $this->board[7][3] = new Piece(COLOR_BLACK, PIECE_QUEEN, 7, 3);
-        $this->board[7][4] = new Piece(COLOR_BLACK, PIECE_KING, 7, 4);
-        $this->board[7][5] = new Piece(COLOR_BLACK, PIECE_BISHOP, 7, 5);
-        $this->board[7][6] = new Piece(COLOR_BLACK, PIECE_KNIGHT, 7, 6);
-        $this->board[7][7] = new Piece(COLOR_BLACK, PIECE_ROOK, 7, 7);
-
-        for ($i = 0; $i < 8; $i++) {
-            $this->board[1][$i] = new Piece(COLOR_WHITE, PIECE_PAWN, 1, $i);
-            $this->board[6][$i] = new Piece(COLOR_BLACK, PIECE_PAWN, 6, $i);
-        }
-
-        $this->activePlayerClr = COLOR_WHITE;
+        $this->activePlayerClr = $initialActivePlayer;
     }
 
     // Возвращает фигуру в клетке, заданной
@@ -106,5 +110,10 @@ class State {
             }
         }
         return $res;
+    }
+
+    // INTENDED FOR USAGE IN TESTS ONLY
+    public function getBoard() {
+        return $this->board;
     }
 }
