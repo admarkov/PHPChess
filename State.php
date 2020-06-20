@@ -53,9 +53,23 @@ class State {
         $this->activePlayerClr = $initialActivePlayer;
     }
 
+    public function __clone()
+    {
+        $board = array();
+        for ($i = 0; $i < 8; $i++) {
+            $row = array();
+            for ($j = 0; $j < 8; $j++) {
+                if (isset($board[$i][$j])) {
+                    $row[] = $board[$i][$j];
+                }
+            }
+            $board[] = $row;
+        }
+    }
+
     // Возвращает фигуру в клетке, заданной
     // координатами в 0-индексации
-    public function getPiece($y, $x)
+    public function getPiece($y, $x): ?Piece
     {
         if (self::checkCoordinates($x, $y)) {
             return $this->board[$y][$x];

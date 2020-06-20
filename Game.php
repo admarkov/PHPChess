@@ -11,7 +11,7 @@ const LOGERR_FORBIDDEN_MOVE = 'forbidden_move';
 
 class Game {
     private $id;
-    public $state;
+    public ?State $state;
 
     private $synchronize = true;
 
@@ -33,6 +33,11 @@ class Game {
             }
         }
         throw new Exception('no such constructor for game');
+    }
+
+    public function __clone()
+    {
+
     }
 
     private static function generateId() {
@@ -123,9 +128,10 @@ class Game {
             }
         } else {
             for ($i = 1; $i < $maxX - $minX; $i++) {
-                if ($this->state->getPiece($maxX - $i, $minX + $i) != null) {
+                if ($this->state->getPiece($maxY - $i, $minX + $i) != null) {
                     return LOGERR_FORBIDDEN_MOVE;
                 }
+         
             }
         }
         return null;
