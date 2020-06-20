@@ -162,10 +162,10 @@ class Game {
             if ($piece2->color == $piece->color) {
                 return LOGERR_FORBIDDEN_MOVE;
             }
-            if ($piece->color == COLOR_BLACK and $piece->y > $y) {
+            if ($piece->color == COLOR_BLACK and $piece->y < $y) {
                 return LOGERR_FORBIDDEN_MOVE;
             }
-            if ($piece->color == COLOR_WHITE and $piece->y < $y) {
+            if ($piece->color == COLOR_WHITE and $piece->y > $y) {
                 return LOGERR_FORBIDDEN_MOVE;
             }
         }

@@ -97,6 +97,220 @@ final class GameTest extends TestCase {
             ]);
     }
 
+    public function testKnightMoves()
+    {
+        $this->check(COLOR_WHITE, 3, 3,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'WQ', 'NN', 'NN', 'NN', 'BQ', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'Wk', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 1, 0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 1, 0, 0, 0, 1, 0, 0],
+                [0, 0, 1, 0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+    }
+
+    public function testKingMovesDamnTest()
+    {
+        $this->check(COLOR_WHITE, 3, 3,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'WK', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 1, 1, 1, 0, 0, 0],
+                [0, 0, 1, 0, 1, 0, 0, 0],
+                [0, 0, 1, 1, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+    }
+
+    public function testPawnMoves()
+    {
+        $this->check(COLOR_WHITE, 3, 3,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'WP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+
+        $this->check(COLOR_BLACK, 3, 3,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'BP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'WP', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+
+        $this->check(COLOR_WHITE, 1, 3,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'WP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+
+        $this->check(COLOR_BLACK, 6, 3,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'BP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+
+        $this->check(COLOR_WHITE, 3, 3,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'WP', 'NN', 'BP', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'BP', 'WP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 1, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+
+        $this->check(COLOR_BLACK, 3, 2,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'BP', 'BP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'BP', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'WP', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+
+        $this->check(COLOR_BLACK, 3, 2,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'WP', 'NN', 'WP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'BP', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'WP', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 1, 1, 1, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+    }
+
+    public function testWrongColor()
+    {
+        $game = new Game(new State);
+        $result = $game->make_move(6, 1, 5, 1);
+        $this->assertEquals($result, LOGERR_WRONG_COLOR);
+    }
+
     // ======== SUPPLIES ========
 
     private function resolvePiece($desc, $y, $x)
