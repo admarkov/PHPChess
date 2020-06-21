@@ -30,6 +30,11 @@ class Piece {
         return chr(ord('A') + $this->x) . chr(ord('1') + $this->y);
     }
 
+    public function promote()
+    {
+        $this->type = PIECE_QUEEN;
+    }
+
     public function toArray()
     {
         return [

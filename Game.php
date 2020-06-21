@@ -254,6 +254,27 @@ class Game {
         return false;
     }
 
+    private function isPromotion($piece, $y)
+    {
+        if (!isset($piece))
+        {
+            return false;
+        }
+        if ($piece->type == PIECE_PAWN)
+        {
+            if ($piece->color == COLOR_WHITE and $piece->y == 6 and $y == 7)
+            {
+                return true;
+            }
+            if ($piece->color == COLOR_BLACK and $piece->y == 1 and $y == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+
     public function make_move($y1, $x1, $y2, $x2) {
         if ($this->isCheckmate()) {
             return LOGERR_GAME_FINISHED;
@@ -275,12 +296,18 @@ class Game {
             return $accepted;
         }
 
+        $promotion = $this->isPromotion($piece, $y2);
         $this->state->movePiece($y1, $x1, $y2, $x2);
-        if ($this->isCheck($this->state->getActivePlayerClr())) {
+        if ($this->isCheck()) {
             $this->state->cancelLastMove();
             return LOGERR_CHECK;
+
         }
         $this->state->toggleActivePlayer();
+        if ($promotion)
+        {
+            $piece->promote();
+        }
 
         if ($this->synchronize) {
             $pg = new PGConnection;

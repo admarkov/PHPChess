@@ -540,6 +540,80 @@ final class GameTest extends TestCase {
         $this->assertFalse($game->isCheckmate());
     }
 
+    public function testPawnPromotionWhite()
+    {
+        $game = $this->createGame(COLOR_WHITE,
+        [
+            ['WP', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'WP', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'WP', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'WP', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'WP', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'WP', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'WP', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+        ]);
+
+        $game->make_move(0, 0, 1, 0);
+        $game->state->toggleActivePlayer();
+        $game->make_move(1, 1, 2, 1);
+        $game->state->toggleActivePlayer();
+        $game->make_move(2, 2, 3, 2);
+        $game->state->toggleActivePlayer();
+        $game->make_move(3, 3, 4, 3);
+        $game->state->toggleActivePlayer();
+        $game->make_move(4, 4, 5, 4);
+        $game->state->toggleActivePlayer();
+        $game->make_move(5, 5, 6, 5);
+        $game->state->toggleActivePlayer();
+        $game->make_move(6, 6, 7, 6);
+
+        $this->assertEquals(PIECE_PAWN, $game->state->getPiece(1, 0)->type);
+        $this->assertEquals(PIECE_PAWN, $game->state->getPiece(2, 1)->type);
+        $this->assertEquals(PIECE_PAWN, $game->state->getPiece(3, 2)->type);
+        $this->assertEquals(PIECE_PAWN, $game->state->getPiece(4, 3)->type);
+        $this->assertEquals(PIECE_PAWN, $game->state->getPiece(5, 4)->type);
+        $this->assertEquals(PIECE_PAWN, $game->state->getPiece(6, 5)->type);
+        $this->assertEquals(PIECE_QUEEN, $game->state->getPiece(7, 6)->type);
+    }
+
+    public function testPawnPromotionBlack()
+    {
+        $game = $this->createGame(COLOR_BLACK,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'BP', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'BP', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'BP', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'BP', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'BP', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'BP', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'BP']
+            ]);
+
+        $game->make_move(1, 1, 0, 1);
+        $game->state->toggleActivePlayer();
+        $game->make_move(2, 2, 1, 2);
+        $game->state->toggleActivePlayer();
+        $game->make_move(3, 3, 2, 3);
+        $game->state->toggleActivePlayer();
+        $game->make_move(4, 4, 3, 4);
+        $game->state->toggleActivePlayer();
+        $game->make_move(5, 5, 4, 5);
+        $game->state->toggleActivePlayer();
+        $game->make_move(6, 6, 5, 6);
+        $game->state->toggleActivePlayer();
+        $game->make_move(7, 7, 6, 7);
+
+        $this->assertEquals(PIECE_QUEEN, $game->state->getPiece(0, 1)->type);
+        $this->assertEquals(PIECE_PAWN, $game->state->getPiece(1, 2)->type);
+        $this->assertEquals(PIECE_PAWN, $game->state->getPiece(2, 3)->type);
+        $this->assertEquals(PIECE_PAWN, $game->state->getPiece(3, 4)->type);
+        $this->assertEquals(PIECE_PAWN, $game->state->getPiece(4, 5)->type);
+        $this->assertEquals(PIECE_PAWN, $game->state->getPiece(5, 6)->type);
+        $this->assertEquals(PIECE_PAWN, $game->state->getPiece(6, 7)->type);
+    }
+
     // ======== SUPPLIES ========
 
     private function resolvePiece($desc, $y, $x)
