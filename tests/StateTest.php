@@ -16,7 +16,7 @@ final class StateTest extends TestCase
         $this->assertNull($state->getPiece(1, 1));
     }
 
-    public function testCancelMove()
+    public function testCancelMoveToEmptyCell()
     {
         $state = new State;
 
@@ -31,5 +31,18 @@ final class StateTest extends TestCase
         $this->assertNull($state->getPiece(2, 1));
         $this->assertNotNull($state->getPiece(1, 1));
         $this->assertEquals(1, $state->getPiece(1, 1)->y);
+    }
+
+    public function testCancelMoveToNonEmptyCell()
+    {
+        $state = new State;
+        $state->movePiece(0, 0, 1, 0);
+        $this->assertNull($state->getPiece(0, 0));
+        $this->assertEquals(PIECE_ROOK, $state->getPiece(1, 0)->type);
+        $state->cancelLastMove();
+        $this->assertEquals(0, $state->getPiece(0, 0)->y);
+        $this->assertEquals(PIECE_ROOK, $state->getPiece(0, 0)->type);
+        $this->assertEquals(1, $state->getPiece(1, 0)->y);
+        $this->assertEquals(PIECE_PAWN, $state->getPiece(1, 0)->type);
     }
 }
