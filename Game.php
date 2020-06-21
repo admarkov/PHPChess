@@ -9,6 +9,13 @@ const LOGERR_WRONG_COLOR = 'wrong_color';
 const LOGERR_CELL_NOT_EMPTY = 'cell_not_empty';
 const LOGERR_FORBIDDEN_MOVE = 'forbidden_move';
 const LOGERR_CHECK = 'check';
+const LOGERR_GAME_FINISHED = 'game_finished';
+
+const GAME_STATUS_REGULAR = 'regular';
+const GAME_STATUS_CHECK_WHITE = 'check_white';
+const GAME_STATUS_CHECK_BLACK = 'check_black';
+const GAME_STATUS_CHECKMATE_WHITE = 'checkmate_white';
+const GAME_STATUS_CHECKMATE_BLACK = 'checkmate_black';
 
 class Game {
     private $id;
@@ -248,6 +255,10 @@ class Game {
     }
 
     public function make_move($y1, $x1, $y2, $x2) {
+        if ($this->isFinished()) {
+            return LOGERR_GAME_FINISHED;
+        }
+
         if (!State::checkCoordinates($y1, $x1) or !State::checkCoordinates($y2, $x2)) {
             return ERRCODE_BAD_PARAMS;
         }
@@ -277,5 +288,34 @@ class Game {
         }
 
         return null;
+    }
+
+    public function isCheckmate($clr)
+    {
+        return false;
+    }
+
+    public function isFinished()
+    {
+        return $this->isCheckmate(COLOR_WHITE) or $this->isCheckmate(COLOR_BLACK);
+    }
+
+    public function status()
+    {
+        if ($this->isCheck($this->state->getActivePlayerClr())) {
+            if ($this->state->getActivePlayerClr() == COLOR_WHITE) {
+                return GAME_STATUS_CHECK_WHITE;
+            } else {
+                return GAME_STATUS_CHECK_BLACK;
+            }
+        }
+        if ($this->isCheckmate($this->state->getActivePlayerClr())) {
+            if ($this->state->getActivePlayerClr() == COLOR_WHITE) {
+                return GAME_STATUS_CHECKMATE_WHITE;
+            } else {
+                return GAME_STATUS_CHECKMATE_BLACK;
+            }
+        }
+        return GAME_STATUS_REGULAR;
     }
 }

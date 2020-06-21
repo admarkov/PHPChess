@@ -10,7 +10,7 @@ class MoveHandler extends APIHandler {
 
         $this->setMethod(METHOD_POST);
 
-        $this->addRequiredField('gameId');
+        $this->addRequiredField('game_id');
         $this->addRequiredField('from');
         $this->addRequiredField('to');
 
@@ -29,7 +29,7 @@ class MoveHandler extends APIHandler {
 
     protected function handlePreparedRequest()
     {
-        $gameId = $this->requestParam('gameId');
+        $gameId = $this->requestParam('game_id');
         list($y1, $x1) = $this->decodeCoordinate($this->requestParam('from'));
         list($y2, $x2) = $this->decodeCoordinate($this->requestParam('to'));
         if (!isset($y1) or !isset($y2) or !isset($x1) or !isset($x2)) {

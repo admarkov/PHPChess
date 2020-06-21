@@ -10,14 +10,14 @@ class StatusHandler extends APIHandler {
 
         $this->setMethod(METHOD_GET);
 
-        $this->addRequiredField('gameId');
+        $this->addRequiredField('game_id');
 
         $this->setRequestData($_GET);
     }
 
     protected function handlePreparedRequest()
     {
-        $gameId = $this->requestParam('gameId');
+        $gameId = $this->requestParam('game_id');
         try {
             $game = new Game($gameId);
         } catch (Exception $e) {
@@ -27,7 +27,8 @@ class StatusHandler extends APIHandler {
             return $this->fail(404, 'game_not_found', "no such game: {$gameId}");
         }
         $response = array();
-        $response['activePlayer'] = $game->state->getActivePlayerClr();
+        $response['game_status'] = $game->status();
+        $response['active_player'] = $game->state->getActivePlayerClr();
         $response['pieces'] = array();
         foreach ($game->state->listPieces() as $piece) {
             $response['pieces'][] = $piece->toArray();

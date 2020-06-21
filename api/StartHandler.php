@@ -19,7 +19,7 @@ class StartHandler extends APIHandler {
             return $this->fail(500, ERRCODE_PG_ERROR, $e->getMessage());
         }
         $response = [
-            'gameId' => $game->getId()
+            'game_id' => $game->getId()
         ];
         return $this->sendResponse($response);
     }
