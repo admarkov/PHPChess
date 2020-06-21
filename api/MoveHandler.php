@@ -36,6 +36,10 @@ class MoveHandler extends APIHandler {
             return $this->fail(400, ERRCODE_BAD_PARAMS, 'cant decode coordinates');
         }
         $game = new Game($gameId);
+        if (!$game->existing())
+        {
+            return $this->fail(404, 'no such game', '');
+        }
         $moveResult = $game->make_move($y1, $x1, $y2, $x2);
         if (!isset($moveResult)) {
             return $this->sendResponse(array());
