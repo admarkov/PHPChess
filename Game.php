@@ -200,14 +200,14 @@ class Game {
 
     private function moveAccepted($piece, $y, $x)
     {
-        $piece2 = $this->state->getPiece($y, $x);
-        if (isset($piece2) and $piece->color == $piece2->color) {
-            return LOGERR_CELL_NOT_EMPTY;
-        }
         if ($piece->y == $y and $piece->x == $x) {
             return LOGERR_FORBIDDEN_MOVE;
         }
 
+        $piece2 = $this->state->getPiece($y, $x);
+        if (isset($piece2) and $piece->color == $piece2->color) {
+            return LOGERR_CELL_NOT_EMPTY;
+        }
         $capitalizeFirst = function($str) {
             $str[0] = strtoupper($str[0]);
             return $str;
@@ -235,16 +235,16 @@ class Game {
         return null;
     }
 
-    public function isCheck($clr)
+    public function isCheck()
     {
-        $king = $this->findKing($clr);
+        $king = $this->findKing($this->state->getActivePlayerClr());
         if (!isset($king)) {
             return false;
         }
         for ($i = 0; $i < 8; $i++) {
             for ($j = 0; $j < 8; $j++) {
                 $piece = $this->state->getPiece($i, $j);
-                if (isset($piece) and $piece->color != $clr) {
+                if (isset($piece) and $piece->color != $this->state->getActivePlayerClr()) {
                     if (is_null($this->moveAccepted($piece, $king->y, $king->x))) {
                         return true;
                     }
@@ -255,7 +255,7 @@ class Game {
     }
 
     public function make_move($y1, $x1, $y2, $x2) {
-        if ($this->isFinished()) {
+        if ($this->isCheckmate()) {
             return LOGERR_GAME_FINISHED;
         }
 
@@ -290,26 +290,47 @@ class Game {
         return null;
     }
 
-    public function isCheckmate($clr)
+    public function isCheckmate()
     {
-        return false;
-    }
-
-    public function isFinished()
-    {
-        return $this->isCheckmate(COLOR_WHITE) or $this->isCheckmate(COLOR_BLACK);
+        for ($y1 = 0; $y1 < 8; $y1++)
+        {
+            for ($x1 = 0; $x1 < 8; $x1++)
+            {
+                $piece = $this->state->getPiece($y1, $x1);
+                if (isset($piece) and $piece->color == $this->state->getActivePlayerClr())
+                {
+                    for ($y2 = 0; $y2 < 8; $y2++)
+                    {
+                        for ($x2 = 0; $x2 < 8; $x2++)
+                        {
+                            $piece = $this->state->getPiece($y1, $x1);
+                            if (is_null($this->moveAccepted($piece, $y2, $x2))) {
+                                $this->state->movePiece($y1, $x1, $y2, $x2);
+                                $safeMove = !$this->isCheck();
+                                $this->state->cancelLastMove();
+                                if ($safeMove == true)
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     public function status()
     {
-        if ($this->isCheck($this->state->getActivePlayerClr())) {
+        if ($this->isCheck()) {
             if ($this->state->getActivePlayerClr() == COLOR_WHITE) {
                 return GAME_STATUS_CHECK_WHITE;
             } else {
                 return GAME_STATUS_CHECK_BLACK;
             }
         }
-        if ($this->isCheckmate($this->state->getActivePlayerClr())) {
+        if ($this->isCheckmate()) {
             if ($this->state->getActivePlayerClr() == COLOR_WHITE) {
                 return GAME_STATUS_CHECKMATE_WHITE;
             } else {

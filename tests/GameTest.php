@@ -121,7 +121,7 @@ final class GameTest extends TestCase {
             ]);
     }
 
-    public function testKingMovesDamnTest()
+    public function testKingMoves()
     {
         $this->check(COLOR_WHITE, 3, 3,
             [
@@ -144,6 +144,29 @@ final class GameTest extends TestCase {
                 [0, 0, 0, 0, 0, 0, 0, 0],
                 [0, 0, 0, 0, 0, 0, 0, 0]
             ]);
+
+        $this->check(COLOR_WHITE, 2, 3,
+            [
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'BR', 'NN', 'NN', 'NN'],
+                ['NN', 'BQ', 'NN', 'WK', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'BP', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'BQ', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+                ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+            ],
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0]
+            ]);
+
     }
 
     public function testPawnMoves()
@@ -316,8 +339,9 @@ final class GameTest extends TestCase {
             ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
             ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
         ]);
-        $this->assertTrue($game->isCheck(COLOR_BLACK));
-        $this->assertFalse($game->isCheck(COLOR_WHITE));
+        $this->assertFalse($game->isCheck());
+        $game->state->toggleActivePlayer();
+        $this->assertTrue($game->isCheck());
 
         $game = $this->createGame(COLOR_WHITE,
             [
@@ -330,8 +354,9 @@ final class GameTest extends TestCase {
                 ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
                 ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
             ]);
-        $this->assertFalse($game->isCheck(COLOR_WHITE));
-        $this->assertFalse($game->isCheck(COLOR_BLACK));
+        $this->assertFalse($game->isCheck());
+        $game->state->toggleActivePlayer();
+        $this->assertFalse($game->isCheck());
 
         $game = $this->createGame(COLOR_WHITE,
             [
@@ -344,8 +369,9 @@ final class GameTest extends TestCase {
                 ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
                 ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
             ]);
-        $this->assertFalse($game->isCheck(COLOR_WHITE));
-        $this->assertFalse($game->isCheck(COLOR_BLACK));
+        $this->assertFalse($game->isCheck());
+        $game->state->toggleActivePlayer();
+        $this->assertFalse($game->isCheck());
     }
 
     public function testCheckMoves()
@@ -444,6 +470,74 @@ final class GameTest extends TestCase {
         $game = new Game(new State);
         $result = $game->make_move(6, 1, 5, 1);
         $this->assertEquals($result, LOGERR_WRONG_COLOR);
+    }
+
+    public function testCheckAndCheckmateRecognition()
+    {
+        $game = $this->createGame(COLOR_WHITE, [
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'WR', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'WK', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'BP', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'BQ', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+        ]);
+        $this->assertTrue($game->isCheck());
+        $this->assertFalse($game->isCheckmate());
+
+        $game = $this->createGame(COLOR_WHITE, [
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'WK', 'NN', 'NN', 'NN'],
+            ['NN', 'BQ', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'BP', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'BQ', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+        ]);
+        $this->assertFalse($game->isCheck());
+        $this->assertFalse($game->isCheckmate());
+
+        $game = $this->createGame(COLOR_WHITE, [
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'BR', 'NN', 'NN', 'NN'],
+            ['NN', 'BQ', 'NN', 'WK', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'BP', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'BQ', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+        ]);
+        $this->assertTrue($game->isCheck());
+        $this->assertFalse($game->isCheckmate());
+
+        $game = $this->createGame(COLOR_WHITE, [
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'BK', 'NN', 'NN'],
+            ['NN', 'BK', 'NN', 'WK', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'Bk', 'NN'],
+            ['NN', 'NN', 'NN', 'BQ', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+        ]);
+        $this->assertTrue($game->isCheck());
+        $this->assertTrue($game->isCheckmate());
+
+        $game = $this->createGame(COLOR_WHITE, [
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'BR', 'NN', 'NN', 'NN'],
+            ['NN', 'BK', 'NN', 'WK', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'Wk', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'BQ', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN'],
+            ['NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN', 'NN']
+        ]);
+        $this->assertTrue($game->isCheck());
+        $this->assertFalse($game->isCheckmate());
     }
 
     // ======== SUPPLIES ========
