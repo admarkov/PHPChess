@@ -3,7 +3,9 @@
 require_once __DIR__ . '/../Game.php';
 require_once __DIR__ . '/APIHandler.php';
 
-class StartHandler extends APIHandler {
+// Обработчки ручки /start
+class StartHandler extends APIHandler
+{
     public function __construct()
     {
         parent::__construct();
@@ -11,6 +13,7 @@ class StartHandler extends APIHandler {
         $this->setMethod(METHOD_POST);
     }
 
+    // перегруженный обработчик подготовленного запроса
     protected function handlePreparedRequest()
     {
         try {

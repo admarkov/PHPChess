@@ -3,7 +3,9 @@
 require_once __DIR__ . '/../Game.php';
 require_once __DIR__ . '/APIHandler.php';
 
-class StatusHandler extends APIHandler {
+// обработчик ручки /status
+class StatusHandler extends APIHandler
+{
     public function __construct()
     {
         parent::__construct();
@@ -15,6 +17,7 @@ class StatusHandler extends APIHandler {
         $this->setRequestData($_GET);
     }
 
+    // перегруженный обработик подготовленного запроса
     protected function handlePreparedRequest()
     {
         $gameId = $this->requestParam('game_id');
@@ -23,14 +26,16 @@ class StatusHandler extends APIHandler {
         } catch (Exception $e) {
             return $this->fail(500, ERRCODE_PG_ERROR, $e->getMessage());
         }
-        if (!$game->existing()) {
+        if (!$game->existing())
+        {
             return $this->fail(404, 'game_not_found', "no such game: {$gameId}");
         }
         $response = array();
         $response['game_status'] = $game->status();
         $response['active_player'] = $game->state->getActivePlayerClr();
         $response['pieces'] = array();
-        foreach ($game->state->listPieces() as $piece) {
+        foreach ($game->state->listPieces() as $piece)
+        {
             $response['pieces'][] = $piece->toArray();
         }
         return $this->sendResponse($response);

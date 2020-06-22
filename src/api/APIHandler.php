@@ -17,6 +17,7 @@ const ERRCODE_BAD_PARAMS        = 'bad_params';
 const METHOD_GET                = 'GET';
 const METHOD_POST               = 'POST';
 
+// Класс обработчика запроса
 abstract class APIHandler
 {
     private $requiredFields = array();
@@ -28,25 +29,31 @@ abstract class APIHandler
 
     }
 
+    // установить метод
     protected function setMethod($method)
     {
         $this->method = $method;
     }
 
+    // добавить обязательное поле
     protected function addRequiredField($field)
     {
         $this->requiredFields[] = $field;
     }
 
+    // установить данные обрабатываемого запроса
     protected function setRequestData($data)
     {
         $this->requestData = $data;
     }
 
+    // проверить метод обрабатываемого запроса на совпадение с ожидаемым
     private function checkMethod()
     {
-        if (isset($this->method)) {
-            if ($this->method == $_SERVER['REQUEST_METHOD']) {
+        if (isset($this->method))
+        {
+            if ($this->method == $_SERVER['REQUEST_METHOD'])
+            {
                 return true;
             } else {
                 return false;
@@ -55,24 +62,30 @@ abstract class APIHandler
         return true;
     }
 
+    // проверить, есть ли среди данных запроса поле $field
     private function checkField($field)
     {
-        if (!array_key_exists($field, $this->requestData)) {
+        if (!array_key_exists($field, $this->requestData))
+        {
             return false;
         }
         return true;
     }
 
+    // проверить, что среди данных запроса присутствуют все обязательные поля
     private function checkRequiredFields()
     {
-        foreach ($this->requiredFields as $field) {
-            if (!$this->checkField($field)) {
+        foreach ($this->requiredFields as $field)
+        {
+            if (!$this->checkField($field))
+            {
                 return false;
             }
         }
         return true;
     }
 
+    // преобразовать код ошибки в статус обработки запроса
     private function errorCodeToStatus($code)
     {
         $type = (int)($code / 100);
@@ -85,6 +98,7 @@ abstract class APIHandler
         return null;
     }
 
+    // вернуть ошибку
     protected function fail($httpcode, $errorcode, $details = null)
     {
         http_response_code($httpcode);
@@ -96,6 +110,7 @@ abstract class APIHandler
         return null;
     }
 
+    // вернуть ответ на запрос
     protected function sendResponse($payload)
     {
         http_response_code(200);
@@ -107,30 +122,37 @@ abstract class APIHandler
         return null;
     }
 
+    // обработать запрос
     public function handleRequest()
     {
-        if (!$this->checkMethod()) {
+        if (!$this->checkMethod())
+        {
             return $this->fail(405, ERRCODE_WRONG_METHOD, "{$this->method} is expected");
         }
-        if (!$this->checkRequiredFields()) {
+        if (!$this->checkRequiredFields())
+        {
             return $this->fail(400, ERRCODE_MISSING_FIELD);
         }
         $this->handlePreparedRequest();
     }
 
+    // Возвращает требуемый метод запроса
     protected function requestMethod()
     {
         return $this->method;
     }
 
+    // Возвращает параметр запроса по ключу
     protected function requestParam($param)
     {
-        if (array_key_exists($param, $this->requestData)) {
+        if (array_key_exists($param, $this->requestData))
+        {
             return $this->requestData[$param];
         }
         return null;
     }
 
+    // абстрактный метод обработки запроса, прошедшего предварительные проверки
     protected abstract function handlePreparedRequest();
 
 }

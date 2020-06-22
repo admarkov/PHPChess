@@ -3,7 +3,9 @@
 require_once __DIR__ . '/APIHandler.php';
 require_once __DIR__ . '/../Game.php';
 
-class MoveHandler extends APIHandler {
+// Обработчик ручки /move
+class MoveHandler extends APIHandler
+{
     public function __construct()
     {
         parent::__construct();
@@ -17,6 +19,7 @@ class MoveHandler extends APIHandler {
         $this->setRequestData($_POST);
     }
 
+    // преобразует координату из шахматной нотации (E2) в двумерную 0-индексацию
     private function decodeCoordinate($coordinate)
     {
         if (strlen($coordinate) != 2) {
@@ -27,12 +30,14 @@ class MoveHandler extends APIHandler {
         return array($y, $x);
     }
 
+    // Перегруженная функция обработки подготовленного запроса
     protected function handlePreparedRequest()
     {
         $gameId = $this->requestParam('game_id');
         list($y1, $x1) = $this->decodeCoordinate($this->requestParam('from'));
         list($y2, $x2) = $this->decodeCoordinate($this->requestParam('to'));
-        if (!isset($y1) or !isset($y2) or !isset($x1) or !isset($x2)) {
+        if (!isset($y1) or !isset($y2) or !isset($x1) or !isset($x2))
+        {
             return $this->fail(400, ERRCODE_BAD_PARAMS, 'cant decode coordinates');
         }
         $game = new Game($gameId);
@@ -41,7 +46,8 @@ class MoveHandler extends APIHandler {
             return $this->fail(404, 'no such game', '');
         }
         $moveResult = $game->make_move($y1, $x1, $y2, $x2);
-        if (!isset($moveResult)) {
+        if (!isset($moveResult))
+        {
             return $this->sendResponse(array());
         } else {
             return $this->fail(400, $moveResult, '');
