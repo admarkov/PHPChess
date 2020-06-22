@@ -35,10 +35,18 @@
 
 Примеры:
 
- `rungame.py canon --host chess.admarkov.com -i tests/game2 -o tests/game2.canondata`
+ `python rungame.py canon --host chess.admarkov.com -i tests/game2 -o tests/game2.canondata`
  
- `rungame.py canon --host chess.admarkov.com -i tests/newgame -o tests/newgame.canondata --interactive`
+ `python rungame.py canon --host chess.admarkov.com -i tests/newgame -o tests/newgame.canondata --interactive`
 
 ##### 2. Запуск тестов 
 
-_TODO_
+Запускает игру на входных данных, сверяет ответы сервера с канонизированными. Выводится разница, если тест работает и ее нет, не выводится ничего.
+
+* `--host` - адрес сервера. Например, `chess.admarkov.com`
+* `-i | --input` - входной файл, содержащий последовательность ходов.
+* `-o | --output` - файл с канонизированными ответами.
+
+Пример:
+
+`python rungame.py test --host chess.admarkov.com -i tests/game2 -o tests/game2.canondata`

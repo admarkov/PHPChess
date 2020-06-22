@@ -1,4 +1,6 @@
 import argparse
+import difflib
+import os
 
 import client
 import util
@@ -70,7 +72,15 @@ class GameRunner:
             self.run_interactive()
         else:
             self.run_from_file()
+        self.input.close()
+        self.output.close()
 
+
+def print_diff(fcanondata, ftestdata):
+    canondata = open(fcanondata, 'r')
+    testdata = open(ftestdata, 'r')
+    diff = difflib.context_diff(canondata.readlines(), testdata.readlines())
+    print('\n'.join([d for d in diff]))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -82,5 +92,13 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if args.action == 'canon':
+        assert args.output
         runner = GameRunner(args.host, args.input, args.output, interactive_mode=args.interactive)
         runner.run()
+
+    if args.action == 'test':
+        output = args.input + '.testdata'
+        runner = GameRunner(args.host, args.input, output)
+        runner.run()
+        print_diff(args.output, output)
+        os.remove(output)
