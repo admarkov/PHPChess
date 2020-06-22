@@ -8,6 +8,13 @@ class ApiResponse:
         self.code = response.status_code
         self.data = json.loads(response.content)
 
+    @property
+    def payload(self):
+        return self.data.get('payload')
+
+    @property
+    def error(self):
+        return self.data.get('error')
 
 class ChessApi:
 
