@@ -1,0 +1,179 @@
+-- START --
+Response code: 200
+Response status: ok
+Game id: %GAME_ID%
+-- MOVE E2E4 --
+Response code: 200
+Response status: ok
+-- STATUS --
+Response code: 200
+Response status: ok
+Game status: regular
+Active player: black
+Board: 
+8 BR Bk BB BQ BK BB Bk BR
+7 BP BP BP BP BP BP BP BP
+6 .. .. .. .. .. .. .. ..
+5 .. .. .. .. .. .. .. ..
+4 .. .. .. .. WP .. .. ..
+3 .. .. .. .. .. .. .. ..
+2 WP WP WP WP .. WP WP WP
+1 WR Wk WB WQ WK WB Wk WR
+  A  B  C  D  E  F  G  H
+
+-- MOVE H7H5 --
+Response code: 200
+Response status: ok
+-- STATUS --
+Response code: 200
+Response status: ok
+Game status: regular
+Active player: white
+Board: 
+8 BR Bk BB BQ BK BB Bk BR
+7 BP BP BP BP BP BP BP ..
+6 .. .. .. .. .. .. .. ..
+5 .. .. .. .. .. .. .. BP
+4 .. .. .. .. WP .. .. ..
+3 .. .. .. .. .. .. .. ..
+2 WP WP WP WP .. WP WP WP
+1 WR Wk WB WQ WK WB Wk WR
+  A  B  C  D  E  F  G  H
+
+-- MOVE D1H5 --
+Response code: 200
+Response status: ok
+-- STATUS --
+Response code: 200
+Response status: ok
+Game status: regular
+Active player: black
+Board: 
+8 BR Bk BB BQ BK BB Bk BR
+7 BP BP BP BP BP BP BP ..
+6 .. .. .. .. .. .. .. ..
+5 .. .. .. .. .. .. .. WQ
+4 .. .. .. .. WP .. .. ..
+3 .. .. .. .. .. .. .. ..
+2 WP WP WP WP .. WP WP WP
+1 WR Wk WB .. WK WB Wk WR
+  A  B  C  D  E  F  G  H
+
+-- MOVE A7A5 --
+Response code: 200
+Response status: ok
+-- STATUS --
+Response code: 200
+Response status: ok
+Game status: regular
+Active player: white
+Board: 
+8 BR Bk BB BQ BK BB Bk BR
+7 .. BP BP BP BP BP BP ..
+6 .. .. .. .. .. .. .. ..
+5 BP .. .. .. .. .. .. WQ
+4 .. .. .. .. WP .. .. ..
+3 .. .. .. .. .. .. .. ..
+2 WP WP WP WP .. WP WP WP
+1 WR Wk WB .. WK WB Wk WR
+  A  B  C  D  E  F  G  H
+
+-- MOVE F1C4 --
+Response code: 200
+Response status: ok
+-- STATUS --
+Response code: 200
+Response status: ok
+Game status: regular
+Active player: black
+Board: 
+8 BR Bk BB BQ BK BB Bk BR
+7 .. BP BP BP BP BP BP ..
+6 .. .. .. .. .. .. .. ..
+5 BP .. .. .. .. .. .. WQ
+4 .. .. WB .. WP .. .. ..
+3 .. .. .. .. .. .. .. ..
+2 WP WP WP WP .. WP WP WP
+1 WR Wk WB .. WK .. Wk WR
+  A  B  C  D  E  F  G  H
+
+-- MOVE A5A4 --
+Response code: 200
+Response status: ok
+-- STATUS --
+Response code: 200
+Response status: ok
+Game status: regular
+Active player: white
+Board: 
+8 BR Bk BB BQ BK BB Bk BR
+7 .. BP BP BP BP BP BP ..
+6 .. .. .. .. .. .. .. ..
+5 .. .. .. .. .. .. .. WQ
+4 BP .. WB .. WP .. .. ..
+3 .. .. .. .. .. .. .. ..
+2 WP WP WP WP .. WP WP WP
+1 WR Wk WB .. WK .. Wk WR
+  A  B  C  D  E  F  G  H
+
+-- MOVE H5F7 --
+Response code: 200
+Response status: ok
+-- STATUS --
+Response code: 200
+Response status: ok
+Game status: checkmate_black
+Active player: black
+Board: 
+8 BR Bk BB BQ BK BB Bk BR
+7 .. BP BP BP BP WQ BP ..
+6 .. .. .. .. .. .. .. ..
+5 .. .. .. .. .. .. .. ..
+4 BP .. WB .. WP .. .. ..
+3 .. .. .. .. .. .. .. ..
+2 WP WP WP WP .. WP WP WP
+1 WR Wk WB .. WK .. Wk WR
+  A  B  C  D  E  F  G  H
+
+-- MOVE E8F7 --
+Response code: 400
+Response status: client_error
+Error code: game_finished
+Message: NO_MESSAGE
+-- STATUS --
+Response code: 200
+Response status: ok
+Game status: checkmate_black
+Active player: black
+Board: 
+8 BR Bk BB BQ BK BB Bk BR
+7 .. BP BP BP BP WQ BP ..
+6 .. .. .. .. .. .. .. ..
+5 .. .. .. .. .. .. .. ..
+4 BP .. WB .. WP .. .. ..
+3 .. .. .. .. .. .. .. ..
+2 WP WP WP WP .. WP WP WP
+1 WR Wk WB .. WK .. Wk WR
+  A  B  C  D  E  F  G  H
+
+-- MOVE C7C6 --
+Response code: 400
+Response status: client_error
+Error code: game_finished
+Message: NO_MESSAGE
+-- STATUS --
+Response code: 200
+Response status: ok
+Game status: checkmate_black
+Active player: black
+Board: 
+8 BR Bk BB BQ BK BB Bk BR
+7 .. BP BP BP BP WQ BP ..
+6 .. .. .. .. .. .. .. ..
+5 .. .. .. .. .. .. .. ..
+4 BP .. WB .. WP .. .. ..
+3 .. .. .. .. .. .. .. ..
+2 WP WP WP WP .. WP WP WP
+1 WR Wk WB .. WK .. Wk WR
+  A  B  C  D  E  F  G  H
+
