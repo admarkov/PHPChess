@@ -1,0 +1,14 @@
+php-fpm:
+        build: php-fpm
+        ports:
+                - 9000:9000
+        volumes:
+                - ./src:/var/www/html/
+nginx:
+        build: nginx
+        ports:
+                - 23917:80
+        volumes:
+                - ./src:/var/www/html
+        links:
+                - php-fpm
