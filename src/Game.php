@@ -350,18 +350,18 @@ class Game {
 
     public function status()
     {
-        if ($this->isCheck()) {
-            if ($this->state->getActivePlayerClr() == COLOR_WHITE) {
-                return GAME_STATUS_CHECK_WHITE;
-            } else {
-                return GAME_STATUS_CHECK_BLACK;
-            }
-        }
         if ($this->isCheckmate()) {
             if ($this->state->getActivePlayerClr() == COLOR_WHITE) {
                 return GAME_STATUS_CHECKMATE_WHITE;
             } else {
                 return GAME_STATUS_CHECKMATE_BLACK;
+            }
+        }
+        if ($this->isCheck()) {
+            if ($this->state->getActivePlayerClr() == COLOR_WHITE) {
+                return GAME_STATUS_CHECK_WHITE;
+            } else {
+                return GAME_STATUS_CHECK_BLACK;
             }
         }
         return GAME_STATUS_REGULAR;
